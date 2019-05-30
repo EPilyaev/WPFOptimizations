@@ -1,0 +1,13 @@
+﻿<Application x:Class="TestApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TestApp"
+             xmlns:mvm="clr-namespace:MVM.ViewModel;assembly=MVM"
+             xmlns:converters="clr-namespace:TestApp.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         <mvm:MainViewModel x:Key="MainViewModel"/>
+         <converters:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
+         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Application.Resources>
+</Application>

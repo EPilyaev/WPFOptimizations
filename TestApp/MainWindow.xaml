@@ -1,0 +1,87 @@
+﻿<Window x:Class="TestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mvm="clr-namespace:MVM.ViewModel;assembly=MVM"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance mvm:MainViewModel}"
+        Title="WPF Optimizations" Height="350" Width="1000" DataContext="{StaticResource MainViewModel}">
+    
+    <Window.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="5,7,5,5"/>
+        </Style>
+        
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="0,5,5,5"/>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="0,5,5,5"/>
+        </Style>
+        
+        <Style TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <DockPanel Grid.Row="0">
+            
+            <TextBlock Style="{StaticResource TextBlockStyle}">Simulation type: </TextBlock>
+            
+            <ComboBox ItemsSource="{Binding Path=SimulationType,
+                                     Converter={StaticResource EnumToCollectionConverter},
+                                     Mode=OneTime}"
+                      SelectedItem="{Binding SimulationType}"/>
+            
+            <Button Content="Simulate" Command="{Binding SimulateCommand}"/>
+            <Button Content="Stop" Command="{Binding StopSimulationCommand}"/>
+            
+            
+            <ProgressBar IsIndeterminate="True"
+                         Visibility="{Binding IsSimulating, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            
+        </DockPanel>
+        
+        
+        <Expander Grid.Row="1" Header="Settings" FontSize="15">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource TextBlockStyle}">Initial items:</TextBlock>
+                <TextBox Text="{Binding SimulationSettings.InitialItemsCount}"  PreviewTextInput="NumberValidation" Margin="0,5,5,5" Width="50" 
+                         TextAlignment="Center" FontSize="15" VerticalContentAlignment="Center"/>
+                
+                <TextBlock Style="{StaticResource TextBlockStyle}">Items per iteration:</TextBlock>
+                <TextBox Text="{Binding SimulationSettings.ItemsPerIteration}"  PreviewTextInput="NumberValidation" Margin="0,5,5,5" Width="50" 
+                         TextAlignment="Center" FontSize="15" VerticalContentAlignment="Center"/>
+                
+                <TextBlock Style="{StaticResource TextBlockStyle}">Delay, ms:</TextBlock>
+                <TextBox Text="{Binding SimulationSettings.SimulationDelayMs}"  PreviewTextInput="NumberValidation" Margin="0,5,5,5" Width="50" 
+                         TextAlignment="Center" FontSize="15" VerticalContentAlignment="Center"/>
+            </StackPanel>
+        </Expander>
+        
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <DataGrid Grid.Column="0" ItemsSource="{Binding FirstItemsContainer.Items}"/>
+            <DataGrid Grid.Column="1" ItemsSource="{Binding SecondItemsContainer.Items}"/>
+            <DataGrid Grid.Column="2" ItemsSource="{Binding ThirdItemsContainer.Items}"/>
+        </Grid>
+        
+    </Grid>
+</Window>
