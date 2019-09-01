@@ -66,7 +66,7 @@ namespace MVM.Simulation
 
         protected void DoHardWork(int milliseconds)
         {
-            Thread.Sleep(milliseconds);
+            SpinWait.SpinUntil(()=>false, milliseconds);
         }
 
         protected void InvokeInUIContext(Action action)
