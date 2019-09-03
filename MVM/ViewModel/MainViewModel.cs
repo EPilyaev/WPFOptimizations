@@ -54,7 +54,7 @@ namespace MVM.ViewModel
         }
 
         public SimulationSettings SimulationSettings { get; }
-            = new SimulationSettings(20, 100, 1000);
+            = new SimulationSettings(20, 200, 1000);
 
         public bool IsSimulating
         {
